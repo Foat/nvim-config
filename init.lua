@@ -135,12 +135,14 @@ require('lazy').setup({
   },
 
   {
-    'luisiacc/gruvbox-baby',
+    'catppuccin/nvim',
     lazy = false,
     priority = 1000,
     config = function()
-      vim.g.gruvbox_baby_telescope_theme = 1
-      vim.cmd.colorscheme 'gruvbox-baby'
+      require('catppuccin').setup({
+        flavour = 'frappe',
+      })
+      vim.cmd.colorscheme 'catppuccin'
     end,
   },
 
@@ -445,6 +447,15 @@ local servers = {
     Lua = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
+    },
+  },
+  pylsp = {
+    pylsp = {
+      plugins = {
+        pycodestyle = {
+          maxLineLength = 120
+        }
+      }
     },
   },
 }
