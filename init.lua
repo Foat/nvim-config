@@ -135,15 +135,12 @@ require('lazy').setup({
   },
 
   {
-      -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+    'luisiacc/gruvbox-baby',
+    lazy = false,
     priority = 1000,
     config = function()
-      require('onedark').setup({
-        style = 'warm',
-        ending_tildes = true,
-      })
-      vim.cmd.colorscheme 'onedark'
+      vim.g.gruvbox_baby_telescope_theme = 1
+      vim.cmd.colorscheme 'gruvbox-baby'
     end,
   },
 
