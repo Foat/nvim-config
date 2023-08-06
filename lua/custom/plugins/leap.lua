@@ -1,7 +1,7 @@
 return {
   'ggandor/leap.nvim',
   lazy = false,
-  dependecies = {
+  dependencies = {
     'tpope/vim-repeat',
   },
   config = function ()

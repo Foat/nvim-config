@@ -18,6 +18,9 @@ return {
           open_file = {
             resize_window = false
           }
+        },
+        filters = {
+          git_ignored = false
         }
       })
     end,

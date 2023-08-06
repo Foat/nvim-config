@@ -449,15 +449,23 @@ local servers = {
       telemetry = { enable = false },
     },
   },
-  pylsp = {
-    pylsp = {
-      plugins = {
-        pycodestyle = {
-          maxLineLength = 120
-        }
+
+  pyright = {
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        diagnosticMode = "workspace",
+        useLibraryCodeForTypes = true
       }
-    },
+    }
   },
+  ruff_lsp = {
+    init_options = {
+      settings = {
+        args = { '--line-length=88' },
+      }
+    }
+  }
 }
 
 -- Setup neovim lua configuration
@@ -481,6 +489,7 @@ mason_lspconfig.setup_handlers {
       on_attach = on_attach,
       settings = servers[server_name],
       filetypes = (servers[server_name] or {}).filetypes,
+      init_options = (servers[server_name] or {}).init_options,
     }
   end
 }
