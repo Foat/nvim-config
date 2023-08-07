@@ -18,8 +18,11 @@ return {
     'williamboman/mason.nvim',
     'jay-babu/mason-nvim-dap.nvim',
 
+    'theHamsta/nvim-dap-virtual-text',
+
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
+    'mfussenegger/nvim-dap-python',
   },
   config = function()
     local dap = require 'dap'
@@ -39,6 +42,7 @@ return {
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
         'delve',
+        'python',
       },
     }
 
@@ -78,10 +82,51 @@ return {
     vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: See last session result.' })
 
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
-    dap.listeners.before.event_terminated['dapui_config'] = dapui.close
-    dap.listeners.before.event_exited['dapui_config'] = dapui.close
+    -- dap.listeners.before.event_terminated['dapui_config'] = dapui.close
+    -- dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
     -- Install golang specific config
     require('dap-go').setup()
+    require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+    vim.keymap.set('n', '<leader>dn', ':lua require("dap-python").test_method()<CR>', { silent = true, noremap = true, desc = '[D]ebug Test Method' })
+    vim.keymap.set('n', '<leader>df', ':lua require("dap-python").test_class()<CR>', { silent = true, noremap = true, desc = '[D]ebug Test Class' })
+    vim.keymap.set('v', '<leader>ds', '<ESC>:lua require("dap-python").debug_selection()<CR>', { silent = true, noremap = true, desc = '[D]ebug [S]election' })
+    local function open_split_buffer_goto_definition()
+      -- Check how many windows are open
+      local wins = vim.api.nvim_tabpage_list_wins(0)
+      local current_cursor_pos = vim.api.nvim_win_get_cursor(0)
+
+      local current_buf = vim.api.nvim_get_current_buf()
+      local current_win = vim.api.nvim_get_current_win()
+
+      local target_win
+
+      -- If there are already splits, then take the next one and set buffer to current buffer
+      if #wins >= 2 then
+          for _, win_num in pairs(wins) do
+              if win_num ~= current_win then
+                  target_win = win_num
+              end
+          end
+      else
+          target_win = current_win
+          vim.cmd('vsplit')
+      end
+
+      -- Set buffer for new window
+      vim.api.nvim_win_set_buf(target_win, current_buf)
+
+      -- Copy cursor position to new window for lsp defintion
+      vim.api.nvim_win_set_cursor(target_win, current_cursor_pos)
+
+      -- Focus new window
+      vim.api.nvim_set_current_win(target_win)
+
+      -- Call lsp
+      vim.lsp.buf.definition()
+    end
+    vim.keymap.set('n', '<leader>gd', open_split_buffer_goto_definition, { desc = 'Goto definition split' })
+
+    require("nvim-dap-virtual-text").setup({})
   end,
 }
