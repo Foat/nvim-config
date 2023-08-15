@@ -435,7 +435,9 @@ end
 --
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
-local servers = {
+local servers = {}
+if vim.loop.os_uname().sysname == 'Darwin' then
+servers = {
   -- clangd = {},
   -- gopls = {},
   -- pyright = {},
@@ -467,7 +469,7 @@ local servers = {
     }
   }
 }
-
+end
 -- Setup neovim lua configuration
 require('neodev').setup()
 
