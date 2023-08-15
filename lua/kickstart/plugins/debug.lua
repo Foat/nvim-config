@@ -88,10 +88,13 @@ return {
     -- Install golang specific config
     require('dap-go').setup()
     require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
-    vim.keymap.set('n', '<leader>dn', ':lua require("dap-python").test_method()<CR>', { silent = true, noremap = true, desc = '[D]ebug Test Method' })
-    vim.keymap.set('n', '<leader>df', ':lua require("dap-python").test_class()<CR>', { silent = true, noremap = true, desc = '[D]ebug Test Class' })
-    vim.keymap.set('v', '<leader>ds', '<ESC>:lua require("dap-python").debug_selection()<CR>', { silent = true, noremap = true, desc = '[D]ebug [S]election' })
+    vim.keymap.set('n', '<leader>dn', ':lua require("dap-python").test_method()<CR>',
+      { silent = true, noremap = true, desc = '[D]ebug Test Method' })
+    vim.keymap.set('n', '<leader>df', ':lua require("dap-python").test_class()<CR>',
+      { silent = true, noremap = true, desc = '[D]ebug Test Class' })
+    vim.keymap.set('v', '<leader>ds', '<ESC>:lua require("dap-python").debug_selection()<CR>',
+      { silent = true, noremap = true, desc = '[D]ebug [S]election' })
 
-    require("nvim-dap-virtual-text").setup({})
+    require('nvim-dap-virtual-text').setup({})
   end,
 }

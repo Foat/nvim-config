@@ -3,7 +3,7 @@ return {
   lazy = false,
   version = '1.*',
   -- Calling require 'term-edit'.setup(opts) is mandatory
-  config = function ()
+  config = function()
     require('term-edit').setup({
       -- Mandatory option:
       -- Set this to a lua pattern that would match the end of your prompt.
