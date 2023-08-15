@@ -137,15 +137,14 @@ require('lazy').setup({
   },
 
   {
-      -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+    'catppuccin/nvim',
+    lazy = false,
     priority = 1000,
     config = function()
-      require('onedark').setup({
-        style = 'warm',
-        ending_tildes = true,
+      require('catppuccin').setup({
+        flavour = 'frappe',
       })
-      vim.cmd.colorscheme 'onedark'
+      vim.cmd.colorscheme 'catppuccin'
     end,
   },
 
@@ -443,7 +442,9 @@ end
 --
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
-local servers = {
+local servers = {}
+if vim.loop.os_uname().sysname == 'Darwin' then
+servers = {
   -- clangd = {},
   -- gopls = {},
   -- pyright = {},
@@ -457,8 +458,25 @@ local servers = {
       telemetry = { enable = false },
     },
   },
-}
 
+  pyright = {
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        diagnosticMode = 'workspace',
+        useLibraryCodeForTypes = true
+      }
+    }
+  },
+  ruff_lsp = {
+    init_options = {
+      settings = {
+        args = { '--line-length=88' },
+      }
+    }
+  }
+}
+end
 -- Setup neovim lua configuration
 require('neodev').setup()
 
@@ -480,6 +498,7 @@ mason_lspconfig.setup_handlers {
       on_attach = on_attach,
       settings = servers[server_name],
       filetypes = (servers[server_name] or {}).filetypes,
+      init_options = (servers[server_name] or {}).init_options,
     }
   end
 }

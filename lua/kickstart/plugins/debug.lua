@@ -18,8 +18,11 @@ return {
     'williamboman/mason.nvim',
     'jay-babu/mason-nvim-dap.nvim',
 
+    'theHamsta/nvim-dap-virtual-text',
+
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
+    'mfussenegger/nvim-dap-python',
   },
   config = function()
     local dap = require 'dap'
@@ -39,6 +42,7 @@ return {
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
         'delve',
+        'python',
       },
     }
 
@@ -78,10 +82,19 @@ return {
     vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: See last session result.' })
 
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
-    dap.listeners.before.event_terminated['dapui_config'] = dapui.close
-    dap.listeners.before.event_exited['dapui_config'] = dapui.close
+    -- dap.listeners.before.event_terminated['dapui_config'] = dapui.close
+    -- dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
     -- Install golang specific config
     require('dap-go').setup()
+    require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+    vim.keymap.set('n', '<leader>dn', ':lua require("dap-python").test_method()<CR>',
+      { silent = true, noremap = true, desc = '[D]ebug Test Method' })
+    vim.keymap.set('n', '<leader>df', ':lua require("dap-python").test_class()<CR>',
+      { silent = true, noremap = true, desc = '[D]ebug Test Class' })
+    vim.keymap.set('v', '<leader>ds', '<ESC>:lua require("dap-python").debug_selection()<CR>',
+      { silent = true, noremap = true, desc = '[D]ebug [S]election' })
+
+    require('nvim-dap-virtual-text').setup({})
   end,
 }
