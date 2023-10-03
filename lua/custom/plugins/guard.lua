@@ -1,6 +1,8 @@
 return {
   'nvimdev/guard.nvim',
-
+  dependencies = {
+    'nvimdev/guard-collection',
+  },
   config = function()
     if vim.loop.os_uname().sysname == 'Darwin' then
       local ft = require('guard.filetype')
