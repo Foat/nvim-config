@@ -4,7 +4,7 @@ return {
     'nvimdev/guard-collection',
   },
   config = function()
-    if vim.loop.os_uname().sysname == 'Darwin' then
+    if vim.env.USER == 'foat' then
       local ft = require('guard.filetype')
       ft('python'):fmt('black')
           :append('isort')
