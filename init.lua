@@ -537,64 +537,64 @@ require('lazy').setup {
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {}
       if vim.env.USER == 'foat' then
-      servers = {
-        -- clangd = {},
-        -- gopls = {},
-        -- pyright = {},
-        -- rust_analyzer = {},
-        -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-        --
-        -- Some languages (like typescript) have entire language plugins that can be useful:
-        --    https://github.com/pmizio/typescript-tools.nvim
-        --
-        -- But for many setups, the LSP (`tsserver`) will work just fine
-        -- tsserver = {},
-        --
+        servers = {
+          -- clangd = {},
+          -- gopls = {},
+          -- pyright = {},
+          -- rust_analyzer = {},
+          -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
+          --
+          -- Some languages (like typescript) have entire language plugins that can be useful:
+          --    https://github.com/pmizio/typescript-tools.nvim
+          --
+          -- But for many setups, the LSP (`tsserver`) will work just fine
+          -- tsserver = {},
+          --
 
-        lua_ls = {
-          -- cmd = {...},
-          -- filetypes { ...},
-          -- capabilities = {},
-          settings = {
-            Lua = {
-              runtime = { version = 'LuaJIT' },
-              workspace = {
-                checkThirdParty = false,
-                -- Tells lua_ls where to find all the Lua files that you have loaded
-                -- for your neovim configuration.
-                library = {
-                  '${3rd}/luv/library',
-                  unpack(vim.api.nvim_get_runtime_file('', true)),
+          lua_ls = {
+            -- cmd = {...},
+            -- filetypes { ...},
+            -- capabilities = {},
+            settings = {
+              Lua = {
+                runtime = { version = 'LuaJIT' },
+                workspace = {
+                  checkThirdParty = false,
+                  -- Tells lua_ls where to find all the Lua files that you have loaded
+                  -- for your neovim configuration.
+                  library = {
+                    '${3rd}/luv/library',
+                    unpack(vim.api.nvim_get_runtime_file('', true)),
+                  },
+                  -- If lua_ls is really slow on your computer, you can try this instead:
+                  -- library = { vim.env.VIMRUNTIME },
                 },
-                -- If lua_ls is really slow on your computer, you can try this instead:
-                -- library = { vim.env.VIMRUNTIME },
+                completion = {
+                  callSnippet = 'Replace',
+                },
+                -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+                -- diagnostics = { disable = { 'missing-fields' } },
               },
-              completion = {
-                callSnippet = 'Replace',
-              },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
             },
           },
-        },
 
-        pyright = {
-          python = {
-            analysis = {
-              autoSearchPaths = true,
-              diagnosticMode = 'workspace',
-              useLibraryCodeForTypes = true
-            }
-          }
-        },
-        ruff_lsp = {
-          init_options = {
-            settings = {
-              args = { '--line-length=88' },
-            }
-          }
-        },
-      }
+          pyright = {
+            python = {
+              analysis = {
+                autoSearchPaths = true,
+                diagnosticMode = 'workspace',
+                useLibraryCodeForTypes = true,
+              },
+            },
+          },
+          ruff_lsp = {
+            init_options = {
+              settings = {
+                args = { '--line-length=88' },
+              },
+            },
+          },
+        }
       end
       -- Ensure the servers and tools above are installed
       --  To check the current status of installed tools and/or manually install
@@ -749,9 +749,9 @@ require('lazy').setup {
     lazy = false, -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
-      require('catppuccin').setup({
+      require('catppuccin').setup {
         flavour = 'frappe',
-      })
+      }
       -- Load the colorscheme here
       vim.cmd.colorscheme 'catppuccin'
 
@@ -810,7 +810,7 @@ require('lazy').setup {
       require('nvim-treesitter.configs').setup {
         ensure_installed = { 'bash', 'c', 'html', 'lua', 'markdown', 'vim', 'vimdoc', 'python' },
         -- Autoinstall languages that are not installed
-        auto_install = true,
+        auto_install = false,
         highlight = { enable = true },
         indent = { enable = true },
       }
