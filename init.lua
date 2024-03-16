@@ -643,6 +643,8 @@ require('lazy').setup({
         python = function()
           if vim.env.USER == 'foat' then
             return { 'isort', 'black' }
+          else
+            return {}
           end
         end,
         -- python = { 'isort', 'black' },
