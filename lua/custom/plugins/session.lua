@@ -14,7 +14,7 @@ return {
       pattern = 'SessionLoadPost',
       group = config_group,
       callback = function()
-        -- require('nvim-tree.api').tree.toggle(false, true)
+        require('neo-tree.sources.manager').show 'filesystem'
       end,
     })
   end,
