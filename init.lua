@@ -601,20 +601,17 @@ require('lazy').setup({
           },
 
           pyright = {
-            python = {
-              analysis = {
-                autoSearchPaths = true,
-                diagnosticMode = 'workspace',
-                useLibraryCodeForTypes = true,
+            settings = {
+              python = {
+                analysis = {
+                  autoSearchPaths = true,
+                  diagnosticMode = 'workspace',
+                  useLibraryCodeForTypes = true,
+                },
               },
-            },
+            }
           },
           ruff_lsp = {
-            init_options = {
-              settings = {
-                args = { '--line-length=20' },
-              },
-            },
           },
         }
       end
