@@ -15,8 +15,7 @@ return {
         },
       },
     }
-    require('neodev').setup {
-      library = { plugins = { 'neotest' }, types = true },
+    require('lazydev').setup {
     }
   end,
 }

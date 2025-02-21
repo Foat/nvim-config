@@ -693,18 +693,18 @@ require('lazy').setup({
             },
           },
 
-          pyright = {
+          basedpyright = {
             settings = {
-              python = {
+              disableOrganizeImports = true,
+              basedpyright = {
                 analysis = {
-                  autoSearchPaths = true,
-                  diagnosticMode = 'workspace',
+                  diagnosticMode = 'openFilesOnly',
                   useLibraryCodeForTypes = true,
                 },
               },
-            }
+            },
           },
-          ruff_lsp = {
+          ruff = {
           },
         }
       end
@@ -781,7 +781,7 @@ require('lazy').setup({
         -- Conform can also run multiple formatters sequentially
         python = function()
           if vim.env.USER == 'foat' then
-            return { 'isort', 'black' }
+            return { 'ruff_format' }
           else
             return {}
           end
@@ -790,11 +790,6 @@ require('lazy').setup({
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
-      },
-      formatters = {
-        isort = {
-          prepend_args = { '--profile', 'black' },
-        },
       },
     },
   },
@@ -928,9 +923,9 @@ require('lazy').setup({
       ---@diagnostic disable-next-line: missing-fields
       require('catppuccin').setup {
         flavour = 'frappe',
-        styles = {
-          comments = { italic = false }, -- Disable italics in comments
-        },
+        --styles = {
+        --  comments = { italic = false }, -- Disable italics in comments
+        --},
       }
 
       -- Load the colorscheme here.

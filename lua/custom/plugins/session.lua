@@ -1,21 +1,25 @@
 return {
-  'Shatur/neovim-session-manager',
-  dependencies = { 'nvim-lua/plenary.nvim' },
+  'rmagatti/auto-session',
   lazy = false,
-  config = function()
-    require('session_manager').setup {
-      autoload_mode = require('session_manager.config').AutoloadMode.CurrentDir,
-      autosave_ignore_dirs = { '~/', '/', '~/Desktop', '~/Developer', '~/Downloads' },
-    }
+  dependencies = {
+    'nvim-telescope/telescope.nvim',
+  },
 
-    local config_group = vim.api.nvim_create_augroup('MyConfigGroup', {})
+  ---enables autocomplete for opts
+  ---@module "auto-session"
+  ---@type AutoSession.Config
+  opts = {
+    suppressed_dirs = { '~/', '/', '~/Desktop', '~/Developer', '~/Downloads' },
+    -- log_level = 'debug',
 
-    vim.api.nvim_create_autocmd({ 'User' }, {
-      pattern = 'SessionLoadPost',
-      group = config_group,
-      callback = function()
-        require('neo-tree.sources.manager').show 'filesystem'
-      end,
-    })
-  end,
+    -- called when no session is restored
+    no_restore_cmds = {
+      'Neotree show',
+    },
+
+    -- called after a session is restored
+    post_restore_cmds = {
+      'Neotree reveal',
+    },
+  }
 }
