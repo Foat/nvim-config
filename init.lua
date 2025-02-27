@@ -404,7 +404,17 @@ require('lazy').setup({
         --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
         --   },
         -- },
-        -- pickers = {}
+        pickers = {
+          find_files = {
+            hidden = true,
+          },
+          grep_string = {
+            additional_args = { '--hidden', '--glob=!.git/*' },
+          },
+          live_grep = {
+            additional_args = { '--hidden', '--glob=!.git/*' },
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -705,8 +715,7 @@ require('lazy').setup({
               },
             },
           },
-          ruff = {
-          },
+          ruff = {},
         }
       end
       -- Ensure the servers and tools above are installed
