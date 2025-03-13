@@ -791,7 +791,7 @@ require('lazy').setup({
         -- Conform can also run multiple formatters sequentially
         python = function()
           if vim.env.USER == 'foat' then
-            return { 'ruff_format' }
+            return { 'ruff_format', 'ruff_organize_imports' }
           else
             return {}
           end
