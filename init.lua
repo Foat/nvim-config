@@ -186,7 +186,7 @@ vim.o.scrolloff = 10
 vim.o.confirm = true
 
 -- Disable Line Wrapping
-vim.opt.wrap = false
+vim.o.wrap = false
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
